@@ -50,39 +50,41 @@ casper.getSummary = function getSummary() {
 casper.start('https://www.4imprint.com/');
 
 _.each(categories, function(c) {
-            var curl = baseUrl + c + '?PS=2000';
-            casper.thenOpen(curl, function() {
-                    this.waitFor(function check() {
-                            return this.evaluate(function() {
-                                return $('.productList').length > 0;
-                            });
-                        }, function then() {
-                            this.echo(this.getSummary());
-                            $.post('http://127.0.0.1:3009/api/product/loadtest', { a: this.getSummary() }, function(x) {
-                                        console.log(JSON.stringify(x));
-                                    }
-                                },
-                                function to() {}, 500000)
-                    })
+    var curl = baseUrl + c + '?PS=2000';
+    casper.thenOpen(curl, function() {
+        this.waitFor(function check() {
+                return this.evaluate(function() {
+                    return $('.productList').length > 0;
+                });
+            }, function then() {
+                var data = this.getSummary();
+                this.echo(data.length);
+				jquery.post('http://127.0.0.1:3009/api/product/loadtest', { a: data }, function(x) {
+                    console.log(JSON.stringify(x));
+                });
+            },
+            function to() {}, 500000)
+    })
 
-                // casper.thenOpenAndEvaluate(curl, function() {
-                //     var xx = $.map($('.productList'), function(a, i) {
-                //         return {
-                //             detailUrl: $('.productLink a[title]:not(.videoLink)', a).attr('href'),
-                //             name: $('.productLink a[title]:not(.videoLink)', a).attr('title'),
-                //             smallImage: $('.productLink a[title]:not(.videoLink) img', a).attr('src')
-                //         }
-                //     });
-                //     $.post('http://127.0.0.1:3009/api/product/loadtest',{a:'xx'},function(x){
-                //     	console.log(JSON.stringify(x));
-                //     })
-                // })
-            }) casper.then(function() {
-            this.echo('First Page: ' + this.getTitle());
-        });
+    // casper.thenOpenAndEvaluate(curl, function() {
+    //     var xx = $.map($('.productList'), function(a, i) {
+    //         return {
+    //             detailUrl: $('.productLink a[title]:not(.videoLink)', a).attr('href'),
+    //             name: $('.productLink a[title]:not(.videoLink)', a).attr('title'),
+    //             smallImage: $('.productLink a[title]:not(.videoLink) img', a).attr('src')
+    //         }
+    //     });
+    //     $.post('http://127.0.0.1:3009/api/product/loadtest',{a:'xx'},function(x){
+    //     	console.log(JSON.stringify(x));
+    //     })
+    // })
+});
+casper.then(function() {
+    this.echo('First Page: ' + this.getTitle());
+});
 
-        // casper.thenOpen('http://phantomjs.org', function() {
-        //     this.echo('Second Page: ' + this.getTitle());
-        // });
+// casper.thenOpen('http://phantomjs.org', function() {
+//     this.echo('Second Page: ' + this.getTitle());
+// });
 
-        casper.run();
+casper.run();
