@@ -34,7 +34,7 @@ var Casper = require('casper');
 
 
 var casper = Casper.create(options);
-casper.getSummary = function getSummary() {
+casper.getProductSummary = function() {
     "use strict";
     this.checkStarted();
     return this.evaluate(function _evaluate() {
@@ -47,6 +47,18 @@ casper.getSummary = function getSummary() {
         });
     });
 };
+casper.getProductDetail=function(){
+    this.checkStarted();
+    return this.evaluate(function _evaluate() {
+        return $.map($('.productList'), function(a, i) {
+            return {
+                detailUrl: $('.productLink a[title]:not(.videoLink)', a).attr('href'),
+                name: $('.productLink a[title]:not(.videoLink)', a).attr('title'),
+                smallImage: $('.productLink a[title]:not(.videoLink) img', a).attr('src')
+            }
+        });
+    });
+}
 casper.start('https://www.4imprint.com/');
 
 _.each(categories, function(c) {
@@ -57,27 +69,16 @@ _.each(categories, function(c) {
                     return $('.productList').length > 0;
                 });
             }, function then() {
-                var data = this.getSummary();
+                var data = this.getProductSummary();
                 this.echo(data.length);
 				jquery.post('http://127.0.0.1:3009/api/product/loadtest', { a: data }, function(x) {
                     console.log(JSON.stringify(x));
                 });
             },
-            function to() {}, 500000)
-    })
+            function timeout() {
 
-    // casper.thenOpenAndEvaluate(curl, function() {
-    //     var xx = $.map($('.productList'), function(a, i) {
-    //         return {
-    //             detailUrl: $('.productLink a[title]:not(.videoLink)', a).attr('href'),
-    //             name: $('.productLink a[title]:not(.videoLink)', a).attr('title'),
-    //             smallImage: $('.productLink a[title]:not(.videoLink) img', a).attr('src')
-    //         }
-    //     });
-    //     $.post('http://127.0.0.1:3009/api/product/loadtest',{a:'xx'},function(x){
-    //     	console.log(JSON.stringify(x));
-    //     })
-    // })
+            }, 500000)
+    })
 });
 casper.then(function() {
     this.echo('First Page: ' + this.getTitle());
