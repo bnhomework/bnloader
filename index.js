@@ -23,12 +23,11 @@ var timeoutCategories = [];
 var allProducts = [];
 var pcount = 0;
 var casper = require('casper').create(options);
-casper.start();
+casper.start('http://www.baidu.com');
 _.each(categories, function(c) {
     var curl = baseUrl + c + '?PS=2000';
     // casper.then(function(){
-    //     this.page.close();
-    //     this.page = this.newPage();
+    //     casper.evaluate(fourImprint.post,'http://127.0.0.1:3009/api/product/loadtest2',{products:[{a:'a'}]});
     // })
     casper.thenOpen(curl, function() {
         this.waitFor(function check() {

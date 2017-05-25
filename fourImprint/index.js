@@ -17,9 +17,9 @@ var post = function(url, data) {
 		error:function(x){
 			result= x;
 		}
-		,
-		dataType: "application/json",
-		contentType: "application/json"
+		// ,
+		// dataType: "application/json",
+		// contentType: "application/json"
 	});
 	return result;
 }
