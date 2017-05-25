@@ -4,19 +4,20 @@ var post = function(url, data) {
 	// }, function(e) {
 	// 	return e;
 	// })
-	var result=''
+	var result={s:'xx'}
 	$.ajax({
 		type: "POST",
 		url: url,
-		data: data,
+		data: JSON.Parse(data),
 		async:false,
 		// timeout:5000,
 		success: function(x) {
-			result= x.data;
+			result= x;
 		},
 		error:function(x){
 			result= x;
-		},
+		}
+		,
 		dataType: "application/json",
 		contentType: "application/json"
 	});
