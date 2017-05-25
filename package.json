@@ -12,6 +12,7 @@
     "casperjs": "^1.1.4",
     "jquery": "^3.2.1",
     "phantomjs": "^2.1.7+deprecated",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "webserver": "^1.1.2"
   }
 }
