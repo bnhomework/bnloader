@@ -4,24 +4,26 @@ var post = function(url, data) {
 	// }, function(e) {
 	// 	return e;
 	// })
-	var result={s:'xx'}
+	// var result={s:data.products.length}
+	// data.products.length=2;
+	var result=[]
 	$.ajax({
-		type: "POST",
+		type: "post",
 		url: url,
 		data: data,
 		async:false,
 		// timeout:5000,
 		success: function(x) {
-			result= x;
+			 result= x;
 		},
 		error:function(x){
-			result= x;
-		}
-		// ,
+			// result= x;
+			result= []
+		},
 		// dataType: "application/json",
 		// contentType: "application/json"
 	});
-	return result;
+	 return result;
 }
 var getProductDetail = function() {
 	var detail = {
