@@ -8,7 +8,7 @@ var post = function(url, data) {
 	$.ajax({
 		type: "POST",
 		url: url,
-		data: JSON.Parse(data),
+		data: data,
 		async:false,
 		// timeout:5000,
 		success: function(x) {

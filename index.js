@@ -47,8 +47,8 @@ _.each(categories, function(c) {
                 var postData = {
                     products: summary
                 };
-                var tmp=casper.evaluate(fourImprint.post,{url: 'http://127.0.0.1:3009/api/product/loadtest2', data: postData});
-                //casper.evaluate(fourImprint.post,'http://127.0.0.1:3009/api/product/loadtest2',postData);
+                // var tmp=casper.evaluate(fourImprint.post,{url: 'http://127.0.0.1:3009/api/product/loadtest2', data: postData});
+                var tmp=casper.evaluate(fourImprint.post,'http://127.0.0.1:3009/api/product/loadtest2',postData);
                 this.echo(JSON.stringify(tmp));
                 this.echo('done:' + curl);
                 // this.waitDone();
