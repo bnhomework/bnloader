@@ -10,8 +10,8 @@ var options = {
     },
     // logLevel: "info", // Only "info" level messages will be logged
     // verbose: true, // log messages will be printed out to the console
-    waitTimeout: 50000,
-    // retryTimeout: 200
+    waitTimeout: 20000,
+    retryTimeout: 200
 };
 // , "/taggroup/88/Uniform"
 var baseUrl = 'https://www.4imprint.com';
@@ -23,12 +23,14 @@ casper.start(baseUrl);
 var populateProducts = function(casper) {
     var products = casper.evaluate(fourImprint.post, 'http://127.0.0.1:3009/api/product/loadtest3', {});
 
-    // console.log(JSON.stringify(products))
+   
     if (products.length == 0) {
         return;
     }
     var product = products[0];
     var detailUrl = baseUrl +product.detailUrl;
+    casper.clearCache();
+     console.log(JSON.stringify(detailUrl))
     casper.thenOpen(detailUrl, function() {
         casper.waitFor(function check() {
             return casper.evaluate(function() {

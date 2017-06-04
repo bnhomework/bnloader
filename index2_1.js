@@ -10,8 +10,8 @@ var options = {
     },
     // logLevel: "info", // Only "info" level messages will be logged
     // verbose: true, // log messages will be printed out to the console
-    waitTimeout: 50000,
-    // retryTimeout: 200
+    waitTimeout: 20000,
+    retryTimeout: 200
 };
 // , "/taggroup/88/Uniform"
 var baseUrl = 'https://www.4imprint.com';
@@ -29,6 +29,8 @@ var populateProducts = function(casper) {
     }
     var product = products[4];
     var detailUrl = baseUrl +product.detailUrl;
+    casper.clearCache();
+     console.log(JSON.stringify(detailUrl))
     casper.thenOpen(detailUrl, function() {
         casper.waitFor(function check() {
             return casper.evaluate(function() {
